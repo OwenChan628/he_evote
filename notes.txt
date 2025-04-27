@@ -1,0 +1,102 @@
+Assignment Question that inspire this project
+
+Q6: Secret Auction with Bribery [50 Marks]
+The government of the Banana Republic plans to sell its state-run airport to the private
+sector. It has decided to hold a secret auction for this purpose. The entire bidding process
+will be conducted over the Internet as follows: Any interested buyer is required to submit
+one and only one secret bid before the auction deadline. After the deadline has passed,
+the government will sell the airport to the highest bidder. (For simplicity, you can assume
+that the identities of all qualified potential buyers are known to the public in advance.)
+Unfortunately, corruption is a serious problem within the Banana Republic’s government.
+It is highly likely that some companies may attempt to bribe government insiders in order
+to gain unfair advantage during this secret auction process, e.g. to learn the bidding prices
+of other companies before submitting one’s own bid, or even ask the insider to help to
+modify the bidding price after the deadline, or perform other unfair acts that you can
+think of. With your knowledge in cryptography, and security protocols, design a scheme,
+i.e. the process and the necessary security handshake protocols and communications
+steps so that the aforementioned Internet secret auction can be held in a fair manner even
+under the existence of bribed government insiders. Use figure(s) of message exchange
+to illustrate your protocol and process. Explain how your process can prevent anyone
+from cheating even with different threats due to bribed government insiders. State any
+additional assumptions you make. Discuss any residual security threats that cannot be
+handled by your proposed scheme.
+
+In this auction, the main challenges are listed as following:
+1. Leakage of buyer’s bid to other buyers, government, man-in-the-middle
+2. Modification of bid after submitting (By Government, Bid Submitter, Man-in-the-middle)
+3. Buyer denying the bid he/she has been sent before
+4. Government insider denying the bid received
+5. Government insider having the private key of Government
+6. Buyer jamming submission receiving server after his/her submission
+7. Buyer jamming other bidders’ submission server. In order to tackle this, 
+the auction will be conducted in two phases: a commitment phase and a reveal phase. 
+Assume: all parties have public/ private key pairs and can sign/ verify message and the public key is known to the public, 
+there is a trusted timestamping authority (TSA), there is a blockchain where bids are publicly recorded in a secured ways 
+for the bidders to verify other bidder’s bid. 
+During the commitment phase, Bidders: Generates a random nonce r_i and hash it with their bid to prevent insider from 
+guessing the bid and send the hash along with their digital signature to government. 
+Also upload a copy of that to TSA and upload to blockchain. Government: Validate the sender’s digital signature before 
+receiving the bid. If the digital signature doesn’t match any bidder’s, block further communication.
+At revealing phase, Bidders: Send r_i to government and upload it to the blockchain. After revealing phase, 
+Government: Calculate the highest bidders and make the announcement. 
+Bidders: Calculate the highest bidders from the blockchain and compare the result to the government
+
+
+Homomorphic Encryption on Cloud Computing
+As many large corporations increasingly collect user data for big data analytics, privacy has emerged as a critical concern. 
+While this practice enables companies to leverage data for various applications, such as personalized recommender systems, it also introduces significant risks. 
+If the storage servers are compromised, sensitive personal information can be exposed, leading to potential misuse, identity theft, or other privacy violations. 
+This highlights the urgent need for robust security measures to protect user data while still allowing organizations to derive value from it. 
+With the use of homomorphic encryption, the server can operate on the client request while the data is still encrypted. 
+In that way, the server would not hold any information but the ciphertext. 
+In this project, I will be implementing end to end homomorphic encryption scheme on cloud computing using Zama’s Concrete library for Python. 
+I will build a secured voting system with FHE on cloud so that the result of the vote is only revealed after the vote has ended, this way the voting is encrypted during the election with each voter holding its key. 
+Additional function could be added after experimenting with the Concrete library.
+
+Secure Voting Systems
+Scenario: An organization wants to conduct an online election where votes remain private, but the tallying process must be verifiable and accurate.
+How FHE/TFHE is Used:
+Voters encrypt their votes using TFHE before submitting them to a central server.
+The server aggregates the encrypted votes (e.g., summing votes for each candidate) without decrypting individual votes.
+TFHE’s support for arithmetic operations ensures efficient tallying, and its programmable bootstrapping allows for additional checks (e.g., verifying vote validity).
+The encrypted results are published, and only authorized parties decrypt the final tally.
+Why FHE? PHE (e.g., Paillier) could handle vote summing but not complex operations like validity checks. FHE’s versatility supports both, ensuring privacy and integrity.
+
+
+
+Real-World Example: Research projects like ElectionGuard (by Microsoft) explore FHE for secure, verifiable voting, protecting voter privacy while enabling transparent audits.
+
+Third Party (Election Authority) -> Generate key pairs -> Gives Public Key
+Client -> Encrypt the vote with public key -> Send to server
+Server -> Handle the income votes + Perform arithmetic FHE computation
+
+When election ends, election authority decrypt the results OR release the private key
+
+Remarks:
+Key generated by concrete are quite big in size: ~100 MB!
+FHE is usually works like:
+    Client: Encrypt query with private key + send evaluation key (Public key i think?) to server
+    Server: Receive evaluation key + ciphertext -> FHE operations -> send back the encrypted result
+    Client: Decrypt with private key
+
+Now the implementation
+    Server: Generate a pairs of keys + send evaluation key to client
+    Client: Encrypt the message with evaluation key?
+    Server: Receive and operate on the message
+
+so private key for encryption / evaluation key for operation?
+
+tfhers have public key encryption / idk about python
+
+Update: Use PHE for evoting instead of TFHE cause TFHE doesnt support public key encryption (as for now)
+
+Useful Links:
+
+Deploy (Server + Client)
+https://docs.zama.ai/concrete/guides/deploy
+
+Key Generation 
+https://docs.zama.ai/concrete/guides/manage_keys
+
+
+
