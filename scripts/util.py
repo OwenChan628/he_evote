@@ -5,13 +5,15 @@ def init_algo(algo):
         phe = LightPHE(algorithm_name = "Paillier")
         secret_key_path = "keys/paillier/secret.txt"
         public_key_path = "keys/paillier/public.txt"
+    if algo == 1:
+        phe = LightPHE(algorithm_name = "Exponential ElGamal")
+        secret_key_path = "keys/exp_elga/secret.txt"
+        public_key_path = "keys/exp_elga/public.txt"
 
     return phe, secret_key_path, public_key_path
     
-
 # Generate key and export it to txt file  *Secret key saved in plaintext*
-def generate_keys(secret_key_path, public_key_path):
-    phe = LightPHE(algorithm_name = "Paillier")
+def generate_keys(phe, secret_key_path, public_key_path):
     phe.export_keys(secret_key_path)
     phe.export_keys(public_key_path, public = True)
     return phe

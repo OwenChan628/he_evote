@@ -80,9 +80,11 @@ FHE is usually works like:
     Client: Decrypt with private key
 
 Now the implementation
-    Server: Generate a pairs of keys + send evaluation key to client
-    Client: Encrypt the message with evaluation key?
+    Server: Generate a pairs of keys + send public key to client
+    Client: Encrypt the message with public key
     Server: Receive and operate on the message
+    -> Votes end
+    Server: Receive key and decrypt result
 
 so private key for encryption / evaluation key for operation?
 
