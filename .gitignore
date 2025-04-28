@@ -1,5 +1,6 @@
-he_evote
-keys
+/he_evote/
+
+keys/
 .DS_Store
 *.pyc
-__pycache__
+__pycache__/
