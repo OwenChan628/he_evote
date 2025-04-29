@@ -1,14 +1,15 @@
 from lightphe import LightPHE
+import json
 
 def init_algo(algo):
     if algo == 0:
         phe = LightPHE(algorithm_name = "Paillier")
-        secret_key_path = "keys/paillier/secret.txt"
-        public_key_path = "keys/paillier/public.txt"
+        secret_key_path = "keys/paillier/secret.key"
+        public_key_path = "keys/paillier/public.key"
     if algo == 1:
         phe = LightPHE(algorithm_name = "Exponential ElGamal")
-        secret_key_path = "keys/exp_elga/secret.txt"
-        public_key_path = "keys/exp_elga/public.txt"
+        secret_key_path = "keys/exp_elga/secret.key"
+        public_key_path = "keys/exp_elga/public.key"
 
     return phe, secret_key_path, public_key_path
     
@@ -21,14 +22,15 @@ def generate_keys(phe, secret_key_path, public_key_path):
 # Load the keys from the files
 def load_public_keys(public_key_path):
     with open(public_key_path, "r") as f:
-        public_key = f.read()
+        public_key_str = f.read()
+        public_key = json.loads(public_key_str)
     return public_key
 def load_private_keys(secret_key_path):
     with open(secret_key_path, "r") as f:
         private_key = f.read()
     return private_key
 
-def load_and_encrypt_tally(cs, size)
+def load_and_encrypt_tally(cs, size):
     tally = [0] * size
     encrypted_tally = cs.encrypt(tally)
     return encrypted_tally
