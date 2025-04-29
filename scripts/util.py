@@ -28,5 +28,9 @@ def load_private_keys(secret_key_path):
         private_key = f.read()
     return private_key
 
+def load_and_encrypt_tally(cs, size)
+    tally = [0] * size
+    encrypted_tally = cs.encrypt(tally)
+    return encrypted_tally
 
 
