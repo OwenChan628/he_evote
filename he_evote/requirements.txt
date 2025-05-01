@@ -1,4 +1,0 @@
-sympy==1.12
-pytest==7.1.2
-tqdm
-lightecc
