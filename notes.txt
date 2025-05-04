@@ -106,4 +106,6 @@ If i got extra time
 - SQL stuff
 ***
 
+LightPHE supports Exponential ElGamal, Elliptic Curve ElGamal, Paillier, Damgard-Jurik, Benaloh, Naccache-Stern, Okamoto-Uchiyama
+(All the additive ones)
 

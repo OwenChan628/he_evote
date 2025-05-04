@@ -2,16 +2,19 @@ from util import *
 import multiprocessing
 
 def main():
-    #Just for testing
-    public_key_path = "keys/paillier/public.key"
+    args = parse_arg_client()
+    algo = args.algo
+    size = args.size
+    print(f"Algorithm choice: {algo}, Number of candidates: {size}")
 
+    public_key_path = algo_path(algo)[1]
     public_key = load_public_keys(public_key_path)
-    cs = LightPHE(algorithm_name="Paillier", keys=public_key)
-    vote = [0, 0, 1]
+    cs = init_algo(algo, key=public_key)
+
+    vote = get_user_vote(size)
     encrypted_vote = cs.encrypt(vote)
-    print("Encrypted vote:", encrypted_vote)
+    save_encrypted_vote(encrypted_vote, "sample_vote/encrypted_vote.pkl")
 
 if __name__ == '__main__':
-    # Set multiprocessing start method to 'spawn' on macOS
     multiprocessing.set_start_method('spawn')
     main()
