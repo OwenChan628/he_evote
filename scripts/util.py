@@ -17,6 +17,8 @@ def init_algo(algo, key=None):
     return phe
 
 def algo_path(algo):
+    import os 
+
     if algo == 0:
         secret_key_path = "keys/paillier/secret.key"
         public_key_path = "keys/paillier/public.key"
@@ -28,6 +30,19 @@ def algo_path(algo):
         public_key_path = "keys/benaloh/public.key"
     else:
         print("Invalid algorithm choice! :(")
+        return None, None
+    
+    secret_dir = os.path.dirname(secret_key_path)
+    public_dir = os.path.dirname(public_key_path)
+    
+    if not os.path.exists(secret_dir):
+        os.makedirs(secret_dir)
+        print(f"Created directory: {secret_dir}")
+        
+    if not os.path.exists(public_dir):
+        os.makedirs(public_dir)
+        print(f"Created directory: {public_dir}")
+    
     return secret_key_path, public_key_path
     
 # === Key Management ===   
