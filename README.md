@@ -14,7 +14,7 @@ python scripts/server.py --generate
 &ensp;--algo 1: EllipticCurve-ElGamal\
 &ensp;--algo 2: Benaloh
 
-## Deploy on http:
+## Deploy on HTTP:
 ```bash
 python scripts/app.py
 ```
