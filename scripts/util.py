@@ -9,7 +9,7 @@ def init_algo(algo, key=None):
     if algo == 0:
         phe = LightPHE(algorithm_name = "Paillier", keys=key)
     elif algo == 1:
-        phe = LightPHE(algorithm_name = "Elliptic-Curve-ElGamal", keys=key)
+        phe = LightPHE(algorithm_name = "EllipticCurve-ElGamal", keys=key)
     elif algo == 2:
         phe = LightPHE(algorithm_name = "Benaloh", keys=key)
     else:

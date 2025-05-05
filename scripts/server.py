@@ -22,6 +22,7 @@ def main():
         public_key = load_public_keys(public_key_path)
         cs = init_algo(algo, key=public_key)
 
+    '''
     tally = load_and_encrypt_tally(cs, size)
     
     encrypted_vote = load_encrypted_vote("sample_vote/encrypted_vote.pkl")
@@ -29,6 +30,7 @@ def main():
 
     decrypt_circuit = init_algo(algo, key=private_key)
     print("Updated encrypted tally:", decrypt_circuit.decrypt(tally))
+    '''
 
 
 if __name__ == '__main__':
