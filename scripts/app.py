@@ -6,8 +6,9 @@ import time
 import threading
 
 # Default settings
-DEFAULT_ALGO = 0 # 0: Paillier, 1: ElGamal, 2: Benaloh
-DEFAULT_SIZE = 3  # Number of candidates
+DEFAULT_ALGO = 5 # 0: Paillier, 1: Exponential-ElGamal, 2: Benaloh
+# 3: Damgard-Jurik, 4: Naccache-Stern, 5: Okamoto-Uchiyama
+DEFAULT_SIZE = 3 # Number of candidates
 
 # Global variables for encrypted tally
 global_tally = None
@@ -48,8 +49,11 @@ def create_app():
         # Get algorithm name
         algo_names = {
             0: "Paillier",
-            1: "EllipticCurve-ElGamal",
-            2: "Benaloh"
+            1: "Exponential-ElGamal",
+            2: "Benaloh",
+            3: "Damgard-Jurik",
+            4: "Naccache-Stern",
+            5: "Okamoto-Uchiyama"
         }
         algo_name = algo_names.get(DEFAULT_ALGO, "Unknown")
         
@@ -68,8 +72,11 @@ def create_app():
         encryption_time = time.time() - start_time
         
         # Update global tally with thread safety
+        start_time = time.time()
         with tally_lock:
             global_tally = global_tally + encrypted_vote
+        addition_time = time.time() - start_time
+        print(f"Vote addition time: {addition_time} seconds")
         
         return jsonify({
             "success": True, 
@@ -92,8 +99,11 @@ def create_app():
         public_key = load_public_keys(public_key_path)
         
         # Decrypt the tally
+        start_time = time.time()
         decrypt_circuit = init_algo(algo, key=private_key)
         final_tally = decrypt_circuit.decrypt(global_tally)
+        decryption_time = time.time() - start_time
+        print(f"Decryption time: {decryption_time} seconds")
         
         return jsonify({"decrypted_tally": final_tally})
 
@@ -115,6 +125,7 @@ def create_app():
     
     return app
 
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     app.run()

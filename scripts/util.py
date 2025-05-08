@@ -9,9 +9,15 @@ def init_algo(algo, key=None):
     if algo == 0:
         phe = LightPHE(algorithm_name = "Paillier", keys=key)
     elif algo == 1:
-        phe = LightPHE(algorithm_name = "EllipticCurve-ElGamal", keys=key)
+        phe = LightPHE(algorithm_name = "Exponential-ElGamal", keys=key)
     elif algo == 2:
         phe = LightPHE(algorithm_name = "Benaloh", keys=key)
+    elif algo == 3:
+        phe = LightPHE(algorithm_name = "Damgard-Jurik", keys=key)
+    elif algo == 4:
+        phe = LightPHE(algorithm_name = "Naccache-Stern", keys=key)
+    elif algo == 5:
+        phe = LightPHE(algorithm_name = "Okamoto-Uchiyama", keys=key)
     else:
         print("Invalid algorithm choice! :(")
     return phe
@@ -23,11 +29,20 @@ def algo_path(algo):
         secret_key_path = "keys/paillier/secret.key"
         public_key_path = "keys/paillier/public.key"
     elif algo == 1:
-        secret_key_path = "keys/elliptic_curve/secret.key"
-        public_key_path = "keys/elliptic_curve/public.key"
+        secret_key_path = "keys/expential-elgamal/secret.key"
+        public_key_path = "keys/expential-elgamal/public.key"
     elif algo == 2:
         secret_key_path = "keys/benaloh/secret.key"
         public_key_path = "keys/benaloh/public.key"
+    elif algo == 3:
+        secret_key_path = "keys/damgard-jurik/secret.key"
+        public_key_path = "keys/damgard-jurik/public.key"
+    elif algo == 4:
+        secret_key_path = "keys/naccache-stern/secret.key"
+        public_key_path = "keys/naccache-stern/public.key"
+    elif algo == 5:
+        secret_key_path = "keys/okamoto-uchiyama/secret.key"
+        public_key_path = "keys/okamoto-uchiyama/public.key"
     else:
         print("Invalid algorithm choice! :(")
         return None, None
